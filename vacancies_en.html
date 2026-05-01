@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVIS.YV | Tire Fitting</title>
+    <meta name="description"
+        content="Modern tire fitting SVIS.YV. Tire storage, wheel alignment, and other services. Fast and reliable.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Russo+One&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        display: ['Russo One', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            DEFAULT: '#39FF14', // Neon Green
+                            hover: '#32CD32',
+                            light: '#98FB98',
+                            dark: '#006400'
+                        },
+                        dark: {
+                            DEFAULT: '#050505',
+                            card: '#0d0d0d',
+                            lighter: '#1a1a1a'
+                        }
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "linear-gradient(to right bottom, rgba(5, 5, 5, 0.95), rgba(5, 5, 5, 0.8)), url('https://images.unsplash.com/photo-1599839619722-39751411ea63?q=80&w=1920&auto=format&fit=crop')",
+                        'green-smoke': "radial-gradient(circle at center, rgba(57, 255, 20, 0.15) 0%, rgba(5, 5, 5, 1) 70%)",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Subtle reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .glass-panel {
+            background: rgba(13, 13, 13, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(57, 255, 20, 0.1);
+        }
+
+        .btn-glow {
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.4);
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+        }
+
+        .btn-glow:hover {
+            box-shadow: 0 0 25px rgba(57, 255, 20, 0.7), inset 0 0 10px rgba(57, 255, 20, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+        }
+
+        .border-glow {
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.2) inset, 0 0 20px rgba(57, 255, 20, 0.2);
+            border-color: #39FF14;
+        }
+        
+        .smoke-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(57, 255, 20, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 60%, rgba(57, 255, 20, 0.1) 0%, transparent 40%);
+            filter: blur(40px);
+            animation: pulse-glow 8s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% { opacity: 0.6; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.05); }
+        }
+
+        .tire-mark {
+            position: absolute;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M10,0 L30,20 L10,40 L30,60 L10,80 L30,100" stroke="rgba(255,255,255,0.03)" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M40,0 L60,20 L40,40 L60,60 L40,80 L60,100" stroke="rgba(255,255,255,0.03)" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M70,0 L90,20 L70,40 L90,60 L70,80 L90,100" stroke="rgba(255,255,255,0.03)" stroke-width="8" fill="none" stroke-linecap="round"/></svg>');
+            width: 300px;
+            height: 100%;
+            opacity: 0.5;
+            z-index: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-brand selection:text-dark">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 glass-panel border-b border-brand/20 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-24">
+                <div class="flex-shrink-0 flex items-center gap-2 sm:gap-3">
+                    <div class="relative flex items-center justify-center w-10 h-10 sm:w-14 sm:h-14 rounded-full border-2 border-brand border-glow overflow-hidden bg-dark">
+                        <div class="absolute inset-2 border-2 border-dashed border-brand/50 rounded-full animate-[spin_10s_linear_infinite]"></div>
+                        <span class="font-display text-brand font-bold text-sm sm:text-lg relative z-10 text-glow">YV</span>
+                    </div>
+                    <span class="font-display font-bold text-xl sm:text-2xl tracking-widest text-white">SVIS.<span class="text-brand text-glow">YV</span></span>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html#services"
+                        class="text-gray-300 hover:text-brand transition-colors text-sm font-bold uppercase tracking-widest">Services</a>
+                    <a href="index.html#advantages"
+                        class="text-gray-300 hover:text-brand transition-colors text-sm font-bold uppercase tracking-widest">Advantages</a>
+                    <a href="vacancies.html" style="color: var(--brand-DEFAULT)"
+                        class="text-gray-300 hover:text-brand transition-colors text-sm font-bold uppercase tracking-widest">Vacancies</a>
+                    <a href="#contact"
+                        class="text-gray-300 hover:text-brand transition-colors text-sm font-bold uppercase tracking-widest">Contacts</a>
+                </div>
+                <div class="flex items-center gap-6">
+                    <div class="hidden sm:flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-400">
+                        <a href="vacancies.html" class="text-brand">UA</a>
+                        <span>|</span>
+                        <a href="vacancies_ru.html" class="hover:text-brand transition-colors">RU</a>
+                        <span>|</span>
+                        <a href="vacancies_en.html" class="hover:text-brand transition-colors">EN</a>
+                    </div>
+                    <div class="hidden lg:block text-right">
+                        <div class="text-xs text-brand/70 font-bold tracking-widest uppercase mb-1">Daily 09:00 - 21:00</div>
+                        <a href="tel:0672454455" class="font-display text-xl font-bold text-white hover:text-brand transition-colors tracking-wider">067 245 44 55</a>
+                    </div>
+                    <a href="#contact"
+                        class="hidden md:inline-flex items-center justify-center px-4 md:px-6 py-2 md:py-3 border-2 border-brand text-xs md:text-sm font-bold uppercase tracking-wider rounded-lg text-dark bg-brand hover:bg-transparent hover:text-brand transition-all duration-300 btn-glow">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 bg-dark flex items-center overflow-hidden border-b border-brand/20">
+        <div class="absolute inset-0 bg-hero-pattern bg-cover bg-center bg-no-repeat opacity-20 mix-blend-luminosity"></div>
+        <div class="smoke-bg"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 text-center reveal active">
+            <h1 class="text-5xl md:text-7xl font-display font-black tracking-tight mb-4 uppercase text-white drop-shadow-2xl">
+                OUR <span class="text-brand text-glow">VACANCIES</span>
+            </h1>
+            <p class="text-xl text-gray-300 font-medium max-w-2xl mx-auto">
+                Join the team of professionals at SVIS.YV! We are looking for responsible and ambitious specialists.
+            </p>
+        </div>
+    </section>
+
+    <!-- Vacancies Section -->
+    <section class="py-24 bg-dark relative z-10" style="min-height: 50vh;">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                <!-- Vacancy 1 -->
+                <div class="glass-panel p-8 rounded-2xl border-brand/20 hover:border-brand/60 hover:shadow-[0_10px_30px_rgba(57,255,20,0.15)] transition-all duration-500 flex flex-col reveal active">
+                    <h3 class="text-2xl font-display font-bold mb-2 text-white uppercase tracking-wider">Tire Fittingник</h3>
+                    <p class="text-brand font-bold text-lg mb-4">From 30,000 UAH</p>
+                    <p class="text-gray-400 font-medium leading-relaxed mb-6 flex-grow">Experience from 1 year. Full range of work: removal, installation, balancing, tire repair. Responsibility and accuracy.</p>
+                    <a href="index.html#contact" class="w-full text-center py-3 border-2 border-brand text-sm font-bold uppercase tracking-wider rounded-lg text-dark bg-brand hover:bg-transparent hover:text-brand transition-all duration-300 btn-glow">Apply</a>
+                </div>
+
+                <!-- Vacancy 2 -->
+                <div class="glass-panel p-8 rounded-2xl border-brand/20 hover:border-brand/60 hover:shadow-[0_10px_30px_rgba(57,255,20,0.15)] transition-all duration-500 flex flex-col reveal active" style="transition-delay: 100ms;">
+                    <h3 class="text-2xl font-display font-bold mb-2 text-white uppercase tracking-wider">Wheel Alignment Master</h3>
+                    <p class="text-brand font-bold text-lg mb-4">From 40,000 UAH</p>
+                    <p class="text-gray-400 font-medium leading-relaxed mb-6 flex-grow">Experience with alloy and steel wheels. Ability to work on specialized machines, argon welding (preferred).</p>
+                    <a href="index.html#contact" class="w-full text-center py-3 border-2 border-brand text-sm font-bold uppercase tracking-wider rounded-lg text-dark bg-brand hover:bg-transparent hover:text-brand transition-all duration-300 btn-glow">Apply</a>
+                </div>
+
+                <!-- Vacancy 3 -->
+                <div class="glass-panel p-8 rounded-2xl border-brand/20 hover:border-brand/60 hover:shadow-[0_10px_30px_rgba(57,255,20,0.15)] transition-all duration-500 flex flex-col reveal active" style="transition-delay: 200ms;">
+                    <h3 class="text-2xl font-display font-bold mb-2 text-white uppercase tracking-wider">Administrator</h3>
+                    <p class="text-brand font-bold text-lg mb-4">From 25,000 UAH</p>
+                    <p class="text-gray-400 font-medium leading-relaxed mb-6 flex-grow">Booking clients, consulting on services, accounting. PC skills, communication skills, stress resistance.</p>
+                    <a href="index.html#contact" class="w-full text-center py-3 border-2 border-brand text-sm font-bold uppercase tracking-wider rounded-lg text-dark bg-brand hover:bg-transparent hover:text-brand transition-all duration-300 btn-glow">Apply</a>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- Footer -->
+    <footer class="bg-[#050505] border-t border-brand/20 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
+                <div class="flex items-center gap-3">
+                    <span class="font-display font-bold text-2xl tracking-widest text-gray-400">SVIS.<span class="text-brand text-glow">YV</span></span>
+                </div>
+                
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <a href="#" class="text-gray-400 hover:text-brand transition-colors"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.29-.48.79-.74 3.08-1.34 5.15-2.23 6.19-2.66 2.95-1.23 3.56-1.44 3.96-1.45.09 0 .28.02.41.13.11.09.13.22.14.34.01.1-.01.24-.03.36z"/></svg></a>
+                    <a href="#" class="text-gray-400 hover:text-brand transition-colors"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.88 5.12c-1.89-1.83-4.57-2.61-7.23-2.61v2c2.14 0 4.29.62 5.8 2.08 1.52 1.47 2.15 3.52 2.15 5.56h2c0-2.58-.8-5.14-2.72-7.03zM21.5 12.15c0-3.32-1.24-6.42-3.41-8.52-2.16-2.09-5.18-3.13-8.19-3.13v2c2.47 0 4.94.86 6.78 2.65 1.83 1.78 2.82 4.14 2.82 6.5h2v.5zm-5.63-4.22c-1.04-.99-2.51-1.42-3.97-1.42v2c.93 0 1.86.27 2.55.93.69.66.97 1.55.97 2.45h2c0-1.15-.36-2.29-1.55-3.96zm-4.33 1.25c-.21 0-.42.06-.59.18-.36.25-.97 1.05-1.36 1.48-.13.15-.33.22-.53.18-.63-.12-1.74-.53-2.69-1.45-.95-.91-1.37-2-.5-2.6.21-.21.96-1 1.22-1.35.15-.2.22-.45.18-.69-.07-.41-.53-1.89-.9-2.72-.11-.25-.33-.44-.6-.49-.78-.14-2.12-.12-2.85.58C1.52 3.65 1.1 5.09 1.1 6.8c0 3.8 3.52 8.35 8.95 13.59.88.85 1.93 1.42 2.89 1.42.74 0 1.44-.22 2.05-.62.83-.55 1.34-1.12 1.34-1.89 0-.47-1.12-1.92-1.84-2.74-.19-.22-.48-.32-.77-.28-.31.05-1 .31-1.34.42-.23.08-.49.03-.68-.13-1.09-.96-1.9-2.01-2.45-2.88 0 0 1.24-1.48 1.47-1.74.2-.23.27-.55.15-.83-.17-.4-.89-1.83-1.18-2.61z"/></svg></a>
+                    <a href="#" class="text-gray-400 hover:text-brand transition-colors"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12.031 2.046c-5.464 0-9.914 4.45-9.914 9.913 0 1.74.449 3.447 1.303 4.965L2 22l5.228-1.372a9.907 9.907 0 004.803 1.248h.004c5.464 0 9.914-4.45 9.914-9.913 0-5.464-4.45-9.917-9.918-9.917zM12.034 20A8.219 8.219 0 018 18.89l-.286-.17-3.23.847.863-3.15-.187-.297a8.216 8.216 0 01-1.267-4.407c0-4.542 3.696-8.24 8.239-8.24 4.542 0 8.239 3.698 8.239 8.24 0 4.543-3.697 8.24-8.237 8.24l-.001.047zm4.513-6.17c-.247-.123-1.465-.723-1.691-.806-.226-.083-.392-.123-.556.123-.165.247-.641.806-.785.97-.144.165-.289.185-.536.062-.247-.124-1.046-.386-1.992-1.23-.736-.656-1.232-1.468-1.376-1.716-.144-.247-.015-.38.108-.503.111-.111.247-.289.37-.433.123-.144.164-.247.247-.412.082-.164.041-.309-.021-.432-.062-.123-.556-1.339-.762-1.834-.2-.483-.404-.418-.556-.425-.144-.007-.309-.009-.474-.009-.165 0-.433.062-.659.309-.226.247-.865.845-.865 2.062 0 1.217.886 2.392 1.01 2.556.123.165 1.742 2.658 4.218 3.727.588.254 1.046.406 1.403.52.593.189 1.134.162 1.562.098.479-.071 1.465-.598 1.671-1.176.206-.577.206-1.072.144-1.176-.062-.104-.226-.165-.474-.289z" clip-rule="evenodd"/></svg></a>
+                    <a href="#" class="text-gray-400 hover:text-brand transition-colors"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"/></svg></a>
+                    <a href="#" class="text-gray-400 hover:text-brand transition-colors"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"/></svg></a>
+                    <a href="tel:0672454455" class="text-brand hover:text-white transition-colors font-display text-xl tracking-widest pl-2">
+                        067 245 44 55
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-600 text-sm font-medium uppercase tracking-widest">
+                    &copy; 2026 SVIS.YV. All rights reserved.
+                </p>
+                <div class="text-gray-600 text-sm font-medium uppercase tracking-widest">
+                    TIRE FITTING | TIRE STORAGE | WHEEL ALIGNMENT
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts for animations -->
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                navbar.classList.add('bg-[#050505]/90', 'backdrop-blur-md', 'shadow-lg');
+                navbar.classList.remove('glass-panel');
+            } else {
+                navbar.classList.add('glass-panel');
+                navbar.classList.remove('bg-[#050505]/90', 'backdrop-blur-md', 'shadow-lg');
+            }
+        });
+
+        // Intersection Observer for reveal animations
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        };
+
+        const revealOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObserver.observe(el);
+        });
+    </script>
+</body>
+
+</html>

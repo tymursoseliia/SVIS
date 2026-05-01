@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@theme {
+  /* Fonts will be loaded via next/font */
+  --font-sans: var(--font-montserrat), sans-serif;
+  --font-display: var(--font-russo), sans-serif;
+
+  --color-brand: #39FF14;
+  --color-brand-hover: #32CD32;
+  --color-brand-light: #98FB98;
+  --color-brand-dark: #006400;
+
+  --color-dark: #1b2110;
+  --color-dark-card: #202713;
+  --color-dark-lighter: #262e17;
+}
+
+:root {
+  --background: #1b2110;
+  --foreground: #f4f6ec;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+}
+
+/* Subtle reveal animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.glass-panel {
+  background: rgba(13, 13, 13, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(57, 255, 20, 0.1);
+}
+
+.btn-glow {
+  box-shadow: 0 0 15px rgba(57, 255, 20, 0.4);
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+}
+
+.btn-glow:hover {
+  box-shadow: 0 0 25px rgba(57, 255, 20, 0.7), inset 0 0 10px rgba(57, 255, 20, 0.3);
+  transform: translateY(-2px);
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+}
+
+.border-glow {
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.2) inset, 0 0 20px rgba(57, 255, 20, 0.2);
+  border-color: #39FF14;
+}
+
+.smoke-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  background: 
+      radial-gradient(circle at 20% 50%, rgba(57, 255, 20, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 80% 60%, rgba(57, 255, 20, 0.1) 0%, transparent 40%);
+  filter: blur(40px);
+  animation: pulse-glow 8s infinite alternate;
+}
+
+@keyframes pulse-glow {
+  0% { opacity: 0.6; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.05); }
+}
+
+.tire-mark {
+  position: absolute;
+  background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M10,0 L30,20 L10,40 L30,60 L10,80 L30,100" stroke="rgba(255,255,255,0.03)" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M40,0 L60,20 L40,40 L60,60 L40,80 L60,100" stroke="rgba(255,255,255,0.03)" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M70,0 L90,20 L70,40 L90,60 L70,80 L90,100" stroke="rgba(255,255,255,0.03)" stroke-width="8" fill="none" stroke-linecap="round"/></svg>');
+  width: 300px;
+  height: 100%;
+  opacity: 0.5;
+  z-index: 0;
+  pointer-events: none;
+}
