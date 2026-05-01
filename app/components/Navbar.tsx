@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -71,6 +72,12 @@ export default function Navbar() {
               Переваги
             </Link>
             <Link
+              href="/vacancies"
+              className={`transition-colors text-xs xl:text-sm font-bold uppercase tracking-widest ${pathname === "/vacancies" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
+            >
+              Вакансії
+            </Link>
+            <Link
               href="/training"
               className={`transition-colors text-xs xl:text-sm font-bold uppercase tracking-widest ${pathname === "/training" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
             >
@@ -98,6 +105,10 @@ export default function Navbar() {
           </div>
           
           <div className="flex items-center gap-3 md:gap-5 whitespace-nowrap">
+            <div className="hidden sm:block">
+              <LanguageSwitcher />
+            </div>
+            
             <div className="hidden lg:block text-right">
               <div className="text-[10px] md:text-xs text-brand/70 font-bold tracking-widest uppercase mb-1">
                 Щодня 08:00 - 20:00
@@ -148,6 +159,7 @@ export default function Navbar() {
               { name: "Ціни", path: "/prices" },
               { name: "Купити шини", path: "/tires" },
               { name: "Переваги", path: "/advantages" },
+              { name: "Вакансії", path: "/vacancies" },
               { name: "Навчання", path: "/training" },
               { name: "Виїзд", path: "/mobile" },
               { name: "Контакти", path: "/contact" },
@@ -163,6 +175,10 @@ export default function Navbar() {
             ))}
             
             <div className="flex flex-col mt-2 gap-4">
+              <div className="sm:hidden flex justify-center py-2">
+                <LanguageSwitcher />
+              </div>
+              
               <a href="tel:0672454455" className="font-display text-xl font-bold text-white tracking-widest hover:text-brand transition-colors">
                 067 245 44 55
               </a>

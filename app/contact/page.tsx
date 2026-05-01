@@ -68,7 +68,7 @@ export default function ContactPage() {
                   </div>
                   <div className="ml-6">
                     <h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-1">Адреса</h4>
-                    <p className="text-xl font-bold text-white mt-1">Shevchenka St, 1А, Bucha, Kyiv Oblast, 08292</p>
+                    <a href="https://maps.google.com/?q=Shevchenka+St,+1А,+Bucha,+Kyiv+Oblast,+08292" target="_blank" rel="noopener noreferrer" className="text-xl font-bold text-white mt-1 hover:text-brand transition-colors underline decoration-brand/30 underline-offset-4 block">Shevchenka St, 1А, Bucha, Kyiv Oblast, 08292</a>
                   </div>
                 </div>
 
