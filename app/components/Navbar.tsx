@@ -46,7 +46,7 @@ export default function Navbar() {
             </span>
           </Link>
           
-          <div className="hidden xl:flex items-center gap-3 2xl:gap-5 ml-4 overflow-hidden whitespace-nowrap">
+          <div className="hidden xl:flex items-center gap-2 2xl:gap-5 whitespace-nowrap">
             <Link
               href="/services"
               className={`transition-colors text-[10px] xl:text-xs 2xl:text-sm font-bold uppercase tracking-widest ${pathname === "/services" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
@@ -91,7 +91,7 @@ export default function Navbar() {
             </Link>
             <Link
               href="/contact"
-              className={`transition-colors text-[10px] xl:text-xs 2xl:text-sm font-bold uppercase tracking-widest hidden xl:block ${pathname === "/contact" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
+              className={`transition-colors text-[10px] xl:text-xs 2xl:text-sm font-bold uppercase tracking-widest hidden 2xl:block ${pathname === "/contact" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
             >
               Контакти
             </Link>
