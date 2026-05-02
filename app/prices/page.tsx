@@ -1,15 +1,25 @@
 import PricingTable from "../components/PricingTable";
 import BookingForm from "../components/BookingForm";
-import { useSettings } from "../providers/SettingsProvider";
-import { StorageCategory } from "@/lib/pricing";
+import { StorageCategory, DEFAULT_PRICES } from "@/lib/pricing";
+import { getSiteSettings } from "@/app/actions/settings";
 
 export const metadata = {
   title: "Прейскурант | SVIS.YV Шиномонтаж",
   description: "Ціни на послуги шиномонтажу: легкові, кросовери, буси. Балансування, зберігання шин, рихтування дисків, латки, вулканізація.",
 };
 
-export default function PricesPage() {
-  const { prices } = useSettings();
+export default async function PricesPage() {
+  const pricesRes = await getSiteSettings('prices');
+  
+  const prices = { ...DEFAULT_PRICES };
+  const dbPrices = pricesRes.data;
+  if (dbPrices) {
+    if (dbPrices.mounting) prices.mounting = { ...DEFAULT_PRICES.mounting, ...dbPrices.mounting };
+    if (dbPrices.storage) prices.storage = { ...DEFAULT_PRICES.storage, ...dbPrices.storage };
+    if (dbPrices.diskRepair) prices.diskRepair = { ...DEFAULT_PRICES.diskRepair, ...dbPrices.diskRepair };
+    if (dbPrices.extraServices) prices.extraServices = { ...DEFAULT_PRICES.extraServices, ...dbPrices.extraServices };
+    if (dbPrices.baseServices) prices.baseServices = { ...DEFAULT_PRICES.baseServices, ...dbPrices.baseServices };
+  }
 
   return (
     <main className="bg-dark min-h-screen text-gray-300">
