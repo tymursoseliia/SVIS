@@ -83,12 +83,13 @@ export default function Navbar() {
             >
               Навчання
             </Link>
-            <Link
-              href="/mobile"
-              className={`transition-colors text-[10px] xl:text-xs 2xl:text-sm font-bold uppercase tracking-widest ${pathname === "/mobile" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
+            <div
+              className={`text-[10px] xl:text-xs 2xl:text-sm font-bold uppercase tracking-widest text-gray-500 cursor-not-allowed opacity-50 relative group`}
+              title="Послуга тимчасово недоступна"
             >
               Виїзд
-            </Link>
+              <span className="absolute -top-3 -right-2 text-[8px] bg-white/10 text-white/50 px-1 rounded">Скоро</span>
+            </div>
             <Link
               href="/contact"
               className={`transition-colors text-[10px] xl:text-xs 2xl:text-sm font-bold uppercase tracking-widest hidden xl:block ${pathname === "/contact" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
