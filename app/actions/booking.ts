@@ -3,6 +3,7 @@
 import { supabase } from '@/lib/supabase';
 import { sendTelegramNotification } from '@/lib/telegram';
 import { revalidatePath } from 'next/cache';
+import { verifyAdminPassword } from './settings';
 
 const TIME_SLOTS = [
   '08:00', '08:30', '09:00', '09:30', '10:00', '10:30',
@@ -136,7 +137,8 @@ export async function getAdminBookings(pwd: string, dateStr?: string) {
     ], error: null };
   }
 
-  if (pwd !== process.env.ADMIN_PASSWORD) {
+  const isAuth = await verifyAdminPassword(pwd);
+  if (!isAuth) {
     return { data: [], error: 'Невірний пароль' };
   }
 
@@ -156,8 +158,9 @@ export async function cancelBooking(id: string, pwd: string) {
     return { success: true };
   }
 
-  if (pwd !== process.env.ADMIN_PASSWORD) {
-    return { success: false, error: 'Цей запис не знайдено або він належить іншому номеру' };
+  const isAuth = await verifyAdminPassword(pwd);
+  if (!isAuth) {
+    return { success: false, error: 'Невірний пароль' };
   }
 
   const { error: cancelError } = await supabase
@@ -177,7 +180,8 @@ export async function cancelBooking(id: string, pwd: string) {
 
 export async function blockDay(date: string, pwd: string) {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL) return { success: true };
-  if (pwd !== process.env.ADMIN_PASSWORD) return { success: false, error: 'Невірний пароль' };
+  const isAuth = await verifyAdminPassword(pwd);
+  if (!isAuth) return { success: false, error: 'Невірний пароль' };
 
   const { error } = await supabase.from('bookings').insert([
     {
@@ -198,7 +202,8 @@ export async function blockDay(date: string, pwd: string) {
 
 export async function unblockDay(date: string, pwd: string) {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL) return { success: true };
-  if (pwd !== process.env.ADMIN_PASSWORD) return { success: false, error: 'Невірний пароль' };
+  const isAuth = await verifyAdminPassword(pwd);
+  if (!isAuth) return { success: false, error: 'Невірний пароль' };
 
   const { error } = await supabase.from('bookings')
     .delete()
@@ -220,7 +225,8 @@ export async function adminCreateBooking(formData: {
   addToExcel: boolean;
 }, pwd: string) {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL) return { success: true };
-  if (pwd !== process.env.ADMIN_PASSWORD) return { success: false, error: 'Невірний пароль' };
+  const isAuth = await verifyAdminPassword(pwd);
+  if (!isAuth) return { success: false, error: 'Невірний пароль' };
 
   // 1. Check if the slot is still available
   const { data: existing } = await supabase

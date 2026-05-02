@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { getAdminBookings, cancelBooking, blockDay, unblockDay, adminCreateBooking } from '@/app/actions/booking';
 import { getVacancies, addVacancy, toggleVacancyStatus } from '@/app/actions/vacancies';
+import SettingsPanel from './SettingsPanel';
 
 type Booking = {
   id: string;
@@ -40,7 +41,7 @@ export default function AdminPage() {
   const [isAdding, setIsAdding] = useState(false);
 
   // Vacancy states
-  const [tab, setTab] = useState<'bookings' | 'vacancies'>('bookings');
+  const [tab, setTab] = useState<'bookings' | 'vacancies' | 'settings'>('bookings');
   const [vacancies, setVacancies] = useState<Vacancy[]>([]);
   const [vacTitle, setVacTitle] = useState('');
   const [vacDesc, setVacDesc] = useState('');
@@ -213,6 +214,13 @@ export default function AdminPage() {
               >
                 Вакансії
               </button>
+              <span className="text-white/20">|</span>
+              <button 
+                onClick={() => setTab('settings')} 
+                className={`text-2xl md:text-3xl font-display font-bold uppercase tracking-wider transition-all ${tab === 'settings' ? 'text-brand' : 'text-gray-500 hover:text-white'}`}
+              >
+                Налаштування
+              </button>
             </div>
             {tab === 'bookings' && (
               <button 
@@ -364,6 +372,8 @@ export default function AdminPage() {
               }
             </div>
           </>
+        ) : tab === 'settings' ? (
+          <SettingsPanel password={password} />
         ) : null}
       </div>
     </div>

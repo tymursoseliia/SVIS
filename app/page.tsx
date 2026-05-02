@@ -1,14 +1,26 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import BookingForm from "@/app/components/BookingForm";
 import ReviewsMarquee from "@/app/components/ReviewsMarquee";
 import VacanciesSection from "@/app/components/VacanciesSection";
+import { getSiteSettings } from "@/app/actions/settings";
 
 export default function Home() {
+  const [heroTitle, setHeroTitle] = useState("ШИНОМОНТАЖ");
+  const [heroSubtitle, setHeroSubtitle] = useState("Зберігання шин | Рихтування дисків");
+
   useEffect(() => {
+    // Load settings
+    getSiteSettings("sections").then((res) => {
+      if (res.data) {
+        if (res.data.heroTitle) setHeroTitle(res.data.heroTitle);
+        if (res.data.heroSubtitle) setHeroSubtitle(res.data.heroSubtitle);
+      }
+    });
+
     // Intersection Observer for reveal animations
     const revealCallback: IntersectionObserverCallback = (entries, observer) => {
       entries.forEach((entry) => {
@@ -58,16 +70,15 @@ export default function Home() {
                 Щодня з 08:00 до 20:00
               </div>
 
-              <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-black tracking-tight mb-4 uppercase text-white drop-shadow-2xl leading-none">
-                ШИНО<span className="text-brand text-glow">МОНТАЖ</span>
+              <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-black tracking-tight mb-4 uppercase text-white drop-shadow-2xl leading-none" dangerouslySetInnerHTML={{ __html: heroTitle.replace('МОНТАЖ', '<span class="text-brand text-glow">МОНТАЖ</span>') }}>
               </h1>
 
               <div className="h-1.5 w-32 bg-brand mb-8 rounded-full shadow-[0_0_15px_#39FF14]"></div>
 
               <h2 className="text-xl sm:text-2xl md:text-3xl text-gray-200 font-bold mb-10 flex flex-col sm:flex-row items-center sm:items-center gap-2 sm:gap-6 uppercase tracking-wider text-center sm:text-left">
-                <span>Зберігання шин</span>
+                <span>{heroSubtitle.split('|')[0]?.trim() || "Зберігання шин"}</span>
                 <span className="hidden sm:inline text-brand/50">|</span>
-                <span>Рихтування дисків</span>
+                <span>{heroSubtitle.split('|')[1]?.trim() || "Рихтування дисків"}</span>
               </h2>
 
               <div className="flex flex-col sm:flex-row gap-5">

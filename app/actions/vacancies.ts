@@ -2,6 +2,7 @@
 
 import { supabase } from '@/lib/supabase';
 import { revalidatePath } from 'next/cache';
+import { verifyAdminPassword } from './settings';
 
 export async function getVacancies() {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
@@ -35,8 +36,9 @@ export async function getActiveVacancies() {
 }
 
 export async function addVacancy(formData: { title: string; description: string; salary: string }, pwd: string) {
-  if (pwd !== process.env.ADMIN_PASSWORD && process.env.NEXT_PUBLIC_SUPABASE_URL) return { success: false, error: 'Невірний пароль' };
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL) return { success: true };
+  const isAuth = await verifyAdminPassword(pwd);
+  if (!isAuth) return { success: false, error: 'Невірний пароль' };
 
   const { error } = await supabase.from('vacancies').insert([
     {
@@ -55,8 +57,9 @@ export async function addVacancy(formData: { title: string; description: string;
 }
 
 export async function toggleVacancyStatus(id: string, currentStatus: boolean, pwd: string) {
-  if (pwd !== process.env.ADMIN_PASSWORD && process.env.NEXT_PUBLIC_SUPABASE_URL) return { success: false, error: 'Невірний пароль' };
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL) return { success: true };
+  const isAuth = await verifyAdminPassword(pwd);
+  if (!isAuth) return { success: false, error: 'Невірний пароль' };
 
   const { error } = await supabase.from('vacancies')
     .update({ active: !currentStatus })

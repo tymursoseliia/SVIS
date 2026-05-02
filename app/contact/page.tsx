@@ -68,7 +68,7 @@ export default function ContactPage() {
                   </div>
                   <div className="ml-6">
                     <h4 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-1">Адреса</h4>
-                    <a href="https://maps.google.com/?q=Shevchenka+St,+1А,+Bucha,+Kyiv+Oblast,+08292" target="_blank" rel="noopener noreferrer" className="text-xl font-bold text-white mt-1 hover:text-brand transition-colors underline decoration-brand/30 underline-offset-4 block">Shevchenka St, 1А, Bucha, Kyiv Oblast, 08292</a>
+                    <a href="https://maps.app.goo.gl/gmPBpedfwtATbrNS8" target="_blank" rel="noopener noreferrer" className="text-xl font-bold text-white mt-1 hover:text-brand transition-colors underline decoration-brand/30 underline-offset-4 block">Shevchenka St, 1А, Bucha, Kyiv Oblast, 08292</a>
                   </div>
                 </div>
 
@@ -98,7 +98,7 @@ export default function ContactPage() {
               loading="lazy" 
               allowFullScreen 
               referrerPolicy="no-referrer-when-downgrade" 
-              src="https://maps.google.com/maps?width=100%25&height=600&hl=uk&q=Shevchenka%20St,%201%D0%90,%20Bucha,%20Kyiv%20Oblast,%2008292+(Svis.YV)&t=&z=15&ie=UTF8&iwloc=B&output=embed"
+              src="https://maps.google.com/maps?width=100%25&height=600&hl=uk&q=50.55515205433848,30.258272346849107&t=&z=15&ie=UTF8&iwloc=B&output=embed"
             ></iframe>
           </div>
         </div>
