@@ -1,6 +1,7 @@
 import PricingTable from "../components/PricingTable";
 import BookingForm from "../components/BookingForm";
 import { useSettings } from "../providers/SettingsProvider";
+import { StorageCategory } from "@/lib/pricing";
 
 export const metadata = {
   title: "Прейскурант | SVIS.YV Шиномонтаж",
@@ -70,7 +71,7 @@ export default function PricesPage() {
                   </thead>
                   <tbody className="divide-y divide-white/5 text-gray-300">
                     {Object.keys(prices.storage.duration1).map((rKey, idx) => {
-                      const cat = rKey as any;
+                      const cat = rKey as StorageCategory;
                       const p1 = prices.storage.duration1[cat];
                       const p6 = prices.storage.duration6[cat];
                       return (
@@ -92,7 +93,7 @@ export default function PricesPage() {
               {/* Mobile View */}
               <div className="lg:hidden flex flex-col gap-4 mt-4">
                     {Object.keys(prices.storage.duration1).map((rKey, idx) => {
-                      const cat = rKey as any;
+                      const cat = rKey as StorageCategory;
                       const p1 = prices.storage.duration1[cat];
                       const p6 = prices.storage.duration6[cat];
                       return (
