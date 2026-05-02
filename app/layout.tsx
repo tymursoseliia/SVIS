@@ -3,6 +3,8 @@ import { Montserrat, Russo_One } from 'next/font/google'
 import './globals.css'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import { SettingsProvider } from './providers/SettingsProvider'
+import { getSiteSettings } from './actions/settings'
 
 const montserrat = Montserrat({
   subsets: ['cyrillic', 'latin'],
@@ -30,17 +32,29 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const [pricesRes, sectionsRes] = await Promise.all([
+    getSiteSettings('prices'),
+    getSiteSettings('sections')
+  ]);
+
+  const settings = {
+    prices: pricesRes.data || {},
+    sections: sectionsRes.data || {}
+  };
+
   return (
     <html lang="uk" className="scroll-smooth">
       <body className={`${montserrat.variable} ${russoOne.variable} font-sans antialiased selection:bg-brand selection:text-dark`}>
-        <Navbar />
-        {children}
-        <Footer />
+        <SettingsProvider settings={settings as any}>
+          <Navbar />
+          {children}
+          <Footer />
+        </SettingsProvider>
       </body>
     </html>
   )

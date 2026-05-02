@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSettings } from "@/app/providers/SettingsProvider";
 
 type CarCategory = "Легкові" | "Кросовери" | "Мікроавтобуси";
 
@@ -34,7 +35,27 @@ const dataBus = [
 ];
 
 export default function PricingTable() {
+  const { prices } = useSettings();
   const [activeTab, setActiveTab] = useState<CarCategory>("Легкові");
+
+  // Dynamic mappers
+  const dynamicCars = dataCars.map(row => {
+    const rKey = `R${row.r}` as any;
+    const t = prices.mounting["Легкові"][rKey] || row.t;
+    return { ...row, t, e: t / 4 };
+  });
+
+  const dynamicSuv = dataSuv.map(row => {
+    const rKey = `R${row.r}` as any;
+    const t = prices.mounting["Кросовери"][rKey] || row.t;
+    return { ...row, t, e: t / 4 };
+  });
+
+  const dynamicBus = dataBus.map(row => {
+    const rKey = `R${row.r}` as any;
+    const t = prices.mounting["Мікроавтобуси"][rKey] || row.t;
+    return { ...row, t, e: t / 4, t6: t * 1.5 }; // approximate 6 wheels
+  });
 
   const renderActiveTable = () => {
     switch (activeTab) {
@@ -55,7 +76,7 @@ export default function PricingTable() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5 text-gray-300">
-                  {dataCars.map((row, idx) => (
+                  {dynamicCars.map((row, idx) => (
                     <tr key={idx} className="hover:bg-white/5 transition-colors">
                       <td className="p-4 sm:p-5 font-bold text-white border-r border-white/5">R{row.r}</td>
                       <td className="p-4 sm:p-5 text-center">{row.z}</td>
@@ -71,7 +92,7 @@ export default function PricingTable() {
 
             {/* Mobile Cards view */}
             <div className="lg:hidden flex flex-col gap-4">
-              {dataCars.map((row, idx) => (
+              {dynamicCars.map((row, idx) => (
                 <div key={idx} className="bg-dark/50 border border-white/10 rounded-xl p-5 flex flex-col relative overflow-hidden shadow-lg backdrop-blur-sm">
                   <div className="absolute top-0 right-0 bg-brand text-dark font-display font-bold px-4 py-1.5 rounded-bl-xl shadow-[0_0_15px_rgba(57,255,20,0.5)] text-sm tracking-wider">
                     4 КОЛЕСА: {row.t} ₴
@@ -118,7 +139,7 @@ export default function PricingTable() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5 text-gray-300">
-                  {dataSuv.map((row, idx) => (
+                  {dynamicSuv.map((row, idx) => (
                     <tr key={idx} className="hover:bg-white/5 transition-colors">
                       <td className="p-4 sm:p-5 font-bold text-white border-r border-white/5">R{row.r}</td>
                       <td className="p-4 sm:p-5 text-center">{row.z}</td>
@@ -133,7 +154,7 @@ export default function PricingTable() {
             </div>
 
             <div className="lg:hidden flex flex-col gap-4">
-              {dataSuv.map((row, idx) => (
+              {dynamicSuv.map((row, idx) => (
                 <div key={idx} className="bg-dark/50 border border-white/10 rounded-xl p-5 flex flex-col relative overflow-hidden shadow-lg backdrop-blur-sm">
                   <div className="absolute top-0 right-0 bg-brand text-dark font-display font-bold px-4 py-1.5 rounded-bl-xl shadow-[0_0_15px_rgba(57,255,20,0.5)] text-sm tracking-wider">
                     4 КОЛЕСА: {row.t} ₴
@@ -181,7 +202,7 @@ export default function PricingTable() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5 text-gray-300">
-                  {dataBus.map((row, idx) => (
+                  {dynamicBus.map((row, idx) => (
                     <tr key={idx} className="hover:bg-white/5 transition-colors">
                       <td className="p-4 sm:p-5 font-bold text-white border-r border-white/5">R{row.r}</td>
                       <td className="p-4 sm:p-5 text-center">{row.z}</td>
@@ -200,7 +221,7 @@ export default function PricingTable() {
             </div>
 
             <div className="lg:hidden flex flex-col gap-4">
-              {dataBus.map((row, idx) => (
+              {dynamicBus.map((row, idx) => (
                  <div key={idx} className="bg-dark/50 border border-brand/30 rounded-xl p-5 flex flex-col relative overflow-hidden shadow-lg backdrop-blur-sm">
                    <div className="absolute top-0 right-0 bg-brand text-dark font-display font-black px-4 py-1.5 rounded-bl-xl shadow-[0_0_15px_rgba(57,255,20,0.5)] text-sm tracking-wider">
                      БУС

@@ -1,5 +1,6 @@
 import PricingTable from "../components/PricingTable";
 import BookingForm from "../components/BookingForm";
+import { useSettings } from "../providers/SettingsProvider";
 
 export const metadata = {
   title: "Прейскурант | SVIS.YV Шиномонтаж",
@@ -7,6 +8,8 @@ export const metadata = {
 };
 
 export default function PricesPage() {
+  const { prices } = useSettings();
+
   return (
     <main className="bg-dark min-h-screen text-gray-300">
       {/* Header section */}
@@ -66,35 +69,36 @@ export default function PricesPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/5 text-gray-300">
-                    {[
-                      { r: "R13-R16", t1: "170", t6: "1000", w1: "200", w6: "1200", d1: "250", d6: "1500" },
-                      { r: "R17-R18", t1: "200", t6: "1200", w1: "250", w6: "1500", d1: "300", d6: "1800" },
-                      { r: "R19-R23", t1: "300", t6: "1800", w1: "400", w6: "2400", d1: "500", d6: "3000" }
-                    ].map((row, idx) => (
-                      <tr key={idx} className="hover:bg-white/5 transition-colors text-center">
-                        <td className="p-4 font-bold text-white border-r border-white/5 text-left">{row.r}</td>
-                        <td className="p-3 border-l border-white/5 text-white/70">{row.t1}</td>
-                        <td className="p-3 border-l border-white/5 font-bold text-white">{row.t6}</td>
-                        <td className="p-3 border-l border-white/5 border-l-brand/30 text-white/70">{row.w1}</td>
-                        <td className="p-3 border-l border-white/5 font-bold text-white bg-white/5">{row.w6}</td>
-                        <td className="p-3 border-l border-white/5 border-l-brand/30 text-white/70">{row.d1}</td>
-                        <td className="p-3 border-l border-white/5 font-bold text-white bg-white/5">{row.d6}</td>
-                      </tr>
-                    ))}
+                    {Object.keys(prices.storage.duration1).map((rKey, idx) => {
+                      const cat = rKey as any;
+                      const p1 = prices.storage.duration1[cat];
+                      const p6 = prices.storage.duration6[cat];
+                      return (
+                        <tr key={idx} className="hover:bg-white/5 transition-colors text-center">
+                          <td className="p-4 font-bold text-white border-r border-white/5 text-left">{cat}</td>
+                          <td className="p-3 border-l border-white/5 text-white/70">{p1['Шини']}</td>
+                          <td className="p-3 border-l border-white/5 font-bold text-white">{p6['Шини']}</td>
+                          <td className="p-3 border-l border-white/5 border-l-brand/30 text-white/70">{p1['Гума з дисками']}</td>
+                          <td className="p-3 border-l border-white/5 font-bold text-white bg-white/5">{p6['Гума з дисками']}</td>
+                          <td className="p-3 border-l border-white/5 border-l-brand/30 text-white/70">{p1['Окремо диски']}</td>
+                          <td className="p-3 border-l border-white/5 font-bold text-white bg-white/5">{p6['Окремо диски']}</td>
+                        </tr>
+                      )
+                    })}
                   </tbody>
                 </table>
               </div>
 
               {/* Mobile View */}
               <div className="lg:hidden flex flex-col gap-4 mt-4">
-                {[
-                  { r: "R13-R16", t1: "170", t6: "1000", w1: "200", w6: "1200", d1: "250", d6: "1500" },
-                  { r: "R17-R18", t1: "200", t6: "1200", w1: "250", w6: "1500", d1: "300", d6: "1800" },
-                  { r: "R19-R23", t1: "300", t6: "1800", w1: "400", w6: "2400", d1: "500", d6: "3000" }
-                ].map((row, idx) => (
+                    {Object.keys(prices.storage.duration1).map((rKey, idx) => {
+                      const cat = rKey as any;
+                      const p1 = prices.storage.duration1[cat];
+                      const p6 = prices.storage.duration6[cat];
+                      return (
                   <div key={idx} className="bg-dark/50 border border-white/10 rounded-xl p-5 shadow-lg backdrop-blur-sm relative overflow-hidden">
-                    <div className="absolute top-0 right-0 bg-brand text-dark font-black px-4 py-1 rounded-bl-xl shadow-[0_0_10px_rgba(57,255,20,0.5)] font-display text-lg tracking-widest">{row.r}</div>
-                    <h3 className="text-xl font-display font-bold text-white mb-6 pr-24 tracking-wider">{row.r}</h3>
+                    <div className="absolute top-0 right-0 bg-brand text-dark font-black px-4 py-1 rounded-bl-xl shadow-[0_0_10px_rgba(57,255,20,0.5)] font-display text-lg tracking-widest">{cat}</div>
+                    <h3 className="text-xl font-display font-bold text-white mb-6 pr-24 tracking-wider">{cat}</h3>
                     
                     <div className="space-y-4">
                       {/* Шини */}
@@ -104,11 +108,11 @@ export default function PricesPage() {
                         </div>
                         <div className="flex justify-between text-sm border-b border-white/5 pb-2">
                           <span className="text-gray-400">1 місяць:</span>
-                          <span className="text-white font-medium">{row.t1} ₴</span>
+                          <span className="text-white font-medium">{p1['Шини']} ₴</span>
                         </div>
                         <div className="flex justify-between text-sm pt-2">
                           <span className="text-gray-300 font-bold">6 місяців (сезон):</span>
-                          <span className="text-white font-black">{row.t6} ₴</span>
+                          <span className="text-white font-black">{p6['Шини']} ₴</span>
                         </div>
                       </div>
                       
@@ -119,11 +123,11 @@ export default function PricesPage() {
                         </div>
                         <div className="flex justify-between text-sm border-b border-white/5 pb-2">
                           <span className="text-gray-400">1 місяць:</span>
-                          <span className="text-white font-medium">{row.w1} ₴</span>
+                          <span className="text-white font-medium">{p1['Гума з дисками']} ₴</span>
                         </div>
                         <div className="flex justify-between text-sm pt-2">
                           <span className="text-gray-300 font-bold">6 місяців (сезон):</span>
-                          <span className="text-white font-black">{row.w6} ₴</span>
+                          <span className="text-white font-black">{p6['Гума з дисками']} ₴</span>
                         </div>
                       </div>
 
@@ -134,16 +138,16 @@ export default function PricesPage() {
                         </div>
                         <div className="flex justify-between text-sm border-b border-white/5 pb-2">
                           <span className="text-gray-400">1 місяць:</span>
-                          <span className="text-white font-medium">{row.d1} ₴</span>
+                          <span className="text-white font-medium">{p1['Окремо диски']} ₴</span>
                         </div>
                         <div className="flex justify-between text-sm pt-2">
                           <span className="text-gray-300 font-bold">6 місяців (сезон):</span>
-                          <span className="text-white font-black">{row.d6} ₴</span>
+                          <span className="text-white font-black">{p6['Окремо диски']} ₴</span>
                         </div>
                       </div>
                     </div>
                   </div>
-                ))}
+                )})}
               </div>
               <div className="mt-4 p-4 border border-brand/20 bg-brand/5 rounded-lg text-sm flex gap-3 text-brand text-glow">
                 <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -162,45 +166,33 @@ export default function PricesPage() {
                 <div className="glass-panel p-6 rounded-xl border border-white/10 hover:border-brand/30 transition-colors">
                   <h3 className="font-display uppercase tracking-widest text-brand mb-4 text-glow">Рихтовка литих</h3>
                   <ul className="space-y-3">
-                    <li className="flex justify-between items-center border-b border-white/5 pb-2">
-                      <span className="text-gray-400">R13-15</span>
-                      <span className="font-bold text-white tracking-widest">500 грн.</span>
+                    {Object.entries(prices.diskRepair.alloy).map(([r, p]) => (
+                    <li key={r} className="flex justify-between items-center border-b border-white/5 pb-2">
+                      <span className="text-gray-400">{r}</span>
+                      <span className="font-bold text-white tracking-widest">{p} грн.</span>
                     </li>
-                    <li className="flex justify-between items-center border-b border-white/5 pb-2">
-                      <span className="text-gray-400">R16-18</span>
-                      <span className="font-bold text-white tracking-widest">600 грн.</span>
-                    </li>
-                    <li className="flex justify-between items-center border-b border-white/5 pb-2">
-                      <span className="text-gray-400">R19-22</span>
-                      <span className="font-bold text-white tracking-widest">700 грн.</span>
-                    </li>
-                    <li className="flex justify-between items-center pb-2">
-                      <span className="text-gray-400">R23</span>
-                      <span className="font-bold text-white tracking-widest">1000 грн.</span>
-                    </li>
+                    ))}
                   </ul>
                 </div>
                 
                 <div className="glass-panel p-6 rounded-xl border border-white/10 hover:border-brand/30 transition-colors">
                   <h3 className="font-display uppercase tracking-widest text-brand mb-4 text-glow">Прокатка залізних</h3>
                   <ul className="space-y-3">
-                    <li className="flex justify-between items-center border-b border-white/5 pb-2">
-                      <span className="text-gray-400">R13-16</span>
-                      <span className="font-bold text-white tracking-wider">від 350 грн.</span>
+                    {Object.entries(prices.diskRepair.steel).map(([r, p]) => (
+                    <li key={r} className="flex justify-between items-center border-b border-white/5 pb-2">
+                      <span className="text-gray-400 text-sm">{r}</span>
+                      <span className="font-bold text-white tracking-wider">від {p} грн.</span>
                     </li>
-                    <li className="flex justify-between items-center border-b border-white/5 pb-2">
-                      <span className="text-gray-400 text-sm">Спрінтер, Крафтер</span>
-                      <span className="font-bold text-white tracking-wider">від 400 грн.</span>
-                    </li>
+                    ))}
                   </ul>
                   
                   <div className="mt-6 pt-4 border-t border-white/10">
                     <p className="text-sm text-gray-400 mb-2 font-display uppercase tracking-widest text-brand">Установка/Зняття 4-x коліс</p>
                     <div className="flex justify-between text-sm py-1">
-                      <span>Легкові:</span> <span className="font-bold text-white">500 грн</span>
+                      <span>Легкові:</span> <span className="font-bold text-white">{prices.diskRepair.install["Легкові"]} грн</span>
                     </div>
                     <div className="flex justify-between text-sm py-1">
-                      <span>Кросовери:</span> <span className="font-bold text-white">600 грн</span>
+                      <span>Кросовери:</span> <span className="font-bold text-white">{prices.diskRepair.install["Кросовери"]} грн</span>
                     </div>
                   </div>
                 </div>
@@ -224,22 +216,12 @@ export default function PricesPage() {
             <div className="glass-panel p-6 rounded-xl border border-white/10">
               <h3 className="font-display font-bold uppercase tracking-widest text-white border-b border-white/10 pb-4 mb-4">Вентилі та датчики</h3>
               <ul className="space-y-4">
-                <li className="flex justify-between">
-                  <span className="text-gray-400">Вентиль</span>
-                  <span className="font-bold text-brand">50 грн.</span>
+                {prices.extraServices.valves.map(v => (
+                <li key={v.name} className="flex justify-between">
+                  <span className="text-gray-400">{v.name}</span>
+                  <span className="font-bold text-brand">{v.price} грн.</span>
                 </li>
-                <li className="flex justify-between">
-                  <span className="text-gray-400">Вентиль залізний</span>
-                  <span className="font-bold text-brand">100 грн.</span>
-                </li>
-                <li className="flex justify-between">
-                  <span className="text-gray-400">Вентиль під датчик</span>
-                  <span className="font-bold text-brand">250 грн.</span>
-                </li>
-                <li className="flex justify-between">
-                  <span className="text-gray-400">Встановлення датчика</span>
-                  <span className="font-bold text-brand">25 грн.</span>
-                </li>
+                ))}
               </ul>
             </div>
             
@@ -247,24 +229,12 @@ export default function PricesPage() {
             <div className="glass-panel p-6 rounded-xl border border-brand/20 bg-brand/5">
               <h3 className="font-display font-bold uppercase tracking-widest text-white border-b border-white/10 pb-4 mb-4">Латки Tip-Top</h3>
               <ul className="space-y-3">
-                {[
-                  { n: "110", p: "250" }, { n: "115", p: "300" }, 
-                  { n: "116", p: "350" }, { n: "120", p: "400" }, 
-                  { n: "125", p: "500" }
-                ].map(p => (
-                  <li key={p.n} className="flex justify-between border-b border-white/5 pb-2">
-                    <span className="text-gray-300">{p.n} p</span>
-                    <span className="font-bold text-brand">{p.p} грн.</span>
+                {prices.extraServices.patches.map(p => (
+                  <li key={p.name} className="flex justify-between border-b border-white/5 pb-2">
+                    <span className="text-gray-300">{p.name}</span>
+                    <span className="font-bold text-brand">{p.price} грн.</span>
                   </li>
                 ))}
-                <li className="flex justify-between pt-1">
-                  <span className="text-gray-300">УП-4,5</span>
-                  <span className="font-bold text-brand">120 грн.</span>
-                </li>
-                <li className="flex justify-between border-t border-white/5 pt-2">
-                  <span className="text-gray-300">УП-8</span>
-                  <span className="font-bold text-brand">150 грн.</span>
-                </li>
               </ul>
             </div>
             
@@ -272,33 +242,12 @@ export default function PricesPage() {
             <div className="glass-panel p-6 rounded-xl border border-white/10">
               <h3 className="font-display font-bold uppercase tracking-widest text-white border-b border-white/10 pb-4 mb-4">Інші роботи</h3>
               <ul className="space-y-4">
-                <li className="flex justify-between">
-                  <span className="text-gray-400">Латки камерні</span>
-                  <span className="font-bold text-white">від 50 - 150 грн.</span>
+                {prices.extraServices.other.map(o => (
+                <li key={o.name} className="flex justify-between border-b border-white/5 pb-2">
+                  <span className="text-gray-400">{o.name}</span>
+                  <span className="font-bold text-white text-right">{o.price}</span>
                 </li>
-                <li className="flex justify-between">
-                  <span className="text-gray-400">Утилізація покришки</span>
-                  <span className="font-bold text-white">100 грн.</span>
-                </li>
-                <li className="flex justify-between">
-                  <span className="text-gray-400">Чистка дисків</span>
-                  <span className="font-bold text-white">80 грн.</span>
-                </li>
-                <li className="flex justify-between">
-                  <span className="text-gray-400 flex flex-col">
-                    <span>Обробка дисків</span>
-                    <span className="text-xs text-gray-500">пастою</span>
-                  </span>
-                  <span className="font-bold text-white mt-1">30 грн.</span>
-                </li>
-                <li className="flex justify-between border-t border-white/10 pt-4 mt-2">
-                  <span className="text-white font-bold uppercase text-sm">Зварювання дисків <br/> (Аргон)</span>
-                  <span className="font-bold text-brand text-glow text-right">від 1000<br/>грн</span>
-                </li>
-                <li className="flex justify-between border-t border-white/10 pt-4 mt-2">
-                  <span className="text-white font-bold uppercase text-sm">Вулканізація</span>
-                  <span className="font-bold text-brand text-glow">від 1200 грн</span>
-                </li>
+                ))}
               </ul>
             </div>
             

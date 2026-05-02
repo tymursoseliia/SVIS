@@ -7,8 +7,9 @@ import WheelOfFortune from './WheelOfFortune';
 import CustomDatePicker from './CustomDatePicker';
 import { 
   CarCategory, Radius, StorageType,
-  MOUNTING_PRICES, STORAGE_PRICES, getStorageCategory, BASE_SERVICE_PRICES, getAvailableRadii
+  getStorageCategory, getAvailableRadii
 } from '@/lib/pricing';
+import { useSettings } from '@/app/providers/SettingsProvider';
 
 const ALL_TIME_SLOTS = [
   '08:00', '08:30', '09:00', '09:30', '10:00', '10:30',
@@ -18,6 +19,7 @@ const ALL_TIME_SLOTS = [
 ];
 
 export default function BookingForm() {
+  const { prices } = useSettings();
   const [tab, setTab] = useState<'book' | 'manage'>('book');
   
   // Book Tab States
@@ -62,24 +64,24 @@ export default function BookingForm() {
 
   // Adjust radius if car type changes to prevent invalid combo
   useEffect(() => {
-    if (carType === 'Легкові' && !getAvailableRadii('Легкові').includes(radius)) setRadius('R15');
-    if (carType === 'Кросовери' && !getAvailableRadii('Кросовери').includes(radius)) setRadius('R17');
+    if (carType === 'Легкові' && !getAvailableRadii('Легкові', prices).includes(radius)) setRadius('R15');
+    if (carType === 'Кросовери' && !getAvailableRadii('Кросовери', prices).includes(radius)) setRadius('R17');
     if (carType === 'Мікроавтобуси') setRadius('R15-16');
-  }, [carType, radius]);
+  }, [carType, radius, prices]);
 
   const getCalculatedPrice = () => {
     let finalPrice = 0;
     if (formData.service === 'Комплекс шиномонтажу') {
-      let basePrice = MOUNTING_PRICES[carType][radius] || 1100;
+      let basePrice = prices.mounting[carType]?.[radius] || 1100;
       if (isRunFlat) basePrice = Math.round(basePrice * 1.2);
       finalPrice = basePrice;
     } else if (formData.service === 'Зберігання шин') {
        const cat = getStorageCategory(radius);
-       finalPrice = STORAGE_PRICES[cat][storageType] || 1000;
+       finalPrice = prices.storage.duration6[cat]?.[storageType] || 1000;
     } else if (formData.service === 'Утилізація шин') {
        finalPrice = wheelCount * 100;
     } else {
-       finalPrice = BASE_SERVICE_PRICES[formData.service] || 500;
+       finalPrice = prices.baseServices[formData.service] || 500;
     }
 
     if (formData.service === 'Комплекс шиномонтажу') {
@@ -455,7 +457,7 @@ export default function BookingForm() {
                   <div>
                     <label className="block text-xs font-bold text-gray-400 mb-1 uppercase tracking-wider">Радіус</label>
                     <select value={radius} onChange={(e) => setRadius(e.target.value as Radius)} className="w-full bg-[#0a0a0a] border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand">
-                      {getAvailableRadii(carType).map(r => (
+                      {getAvailableRadii(carType, prices).map(r => (
                         <option key={r} value={r}>{r}</option>
                       ))}
                     </select>
