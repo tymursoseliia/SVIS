@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useSettings } from "@/app/providers/SettingsProvider";
+import { Radius } from "@/lib/pricing";
 
 type CarCategory = "Легкові" | "Кросовери" | "Мікроавтобуси";
 
@@ -40,19 +41,19 @@ export default function PricingTable() {
 
   // Dynamic mappers
   const dynamicCars = dataCars.map(row => {
-    const rKey = `R${row.r}` as any;
+    const rKey = `R${row.r}` as Radius;
     const t = prices.mounting["Легкові"][rKey] || row.t;
     return { ...row, t, e: t / 4 };
   });
 
   const dynamicSuv = dataSuv.map(row => {
-    const rKey = `R${row.r}` as any;
+    const rKey = `R${row.r}` as Radius;
     const t = prices.mounting["Кросовери"][rKey] || row.t;
     return { ...row, t, e: t / 4 };
   });
 
   const dynamicBus = dataBus.map(row => {
-    const rKey = `R${row.r}` as any;
+    const rKey = `R${row.r}` as Radius;
     const t = prices.mounting["Мікроавтобуси"][rKey] || row.t;
     return { ...row, t, e: t / 4, t6: t * 1.5 }; // approximate 6 wheels
   });
