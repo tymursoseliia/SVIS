@@ -46,58 +46,58 @@ export default function Navbar() {
             </span>
           </Link>
           
-          <div className="hidden xl:flex items-center space-x-5 whitespace-nowrap">
+          <div className="hidden xl:flex items-center gap-3 2xl:gap-5 ml-4 overflow-hidden whitespace-nowrap">
             <Link
               href="/services"
-              className={`transition-colors text-xs xl:text-sm font-bold uppercase tracking-widest ${pathname === "/services" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
+              className={`transition-colors text-[10px] xl:text-xs 2xl:text-sm font-bold uppercase tracking-widest ${pathname === "/services" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
             >
               Послуги
             </Link>
             <Link
               href="/prices"
-              className={`transition-colors text-xs xl:text-sm font-bold uppercase tracking-widest ${pathname === "/prices" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
+              className={`transition-colors text-[10px] xl:text-xs 2xl:text-sm font-bold uppercase tracking-widest ${pathname === "/prices" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
             >
               Ціни
             </Link>
             <Link
               href="/tires"
-              className={`transition-colors text-xs xl:text-sm font-bold uppercase tracking-widest ${pathname === "/tires" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
+              className={`transition-colors text-[10px] xl:text-xs 2xl:text-sm font-bold uppercase tracking-widest ${pathname === "/tires" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
             >
               Купити шини
             </Link>
             <Link
               href="/advantages"
-              className={`transition-colors text-xs xl:text-sm font-bold uppercase tracking-widest ${pathname === "/advantages" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
+              className={`transition-colors text-[10px] xl:text-xs 2xl:text-sm font-bold uppercase tracking-widest ${pathname === "/advantages" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
             >
               Переваги
             </Link>
             <Link
               href="/vacancies"
-              className={`transition-colors text-xs xl:text-sm font-bold uppercase tracking-widest ${pathname === "/vacancies" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
+              className={`transition-colors text-[10px] xl:text-xs 2xl:text-sm font-bold uppercase tracking-widest ${pathname === "/vacancies" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
             >
               Вакансії
             </Link>
             <Link
               href="/training"
-              className={`transition-colors text-xs xl:text-sm font-bold uppercase tracking-widest ${pathname === "/training" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
+              className={`transition-colors text-[10px] xl:text-xs 2xl:text-sm font-bold uppercase tracking-widest hidden 2xl:block ${pathname === "/training" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
             >
               Навчання
             </Link>
             <Link
               href="/mobile"
-              className={`transition-colors text-xs xl:text-sm font-bold uppercase tracking-widest ${pathname === "/mobile" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
+              className={`transition-colors text-[10px] xl:text-xs 2xl:text-sm font-bold uppercase tracking-widest ${pathname === "/mobile" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
             >
               Виїзд
             </Link>
             <Link
               href="/contact"
-              className={`transition-colors text-xs xl:text-sm font-bold uppercase tracking-widest hidden 2xl:block ${pathname === "/contact" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
+              className={`transition-colors text-[10px] xl:text-xs 2xl:text-sm font-bold uppercase tracking-widest hidden xl:block ${pathname === "/contact" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
             >
               Контакти
             </Link>
             <Link
               href="/cabinet"
-              className={`flex items-center gap-1.5 transition-colors text-xs xl:text-sm font-bold uppercase tracking-widest border border-brand/30 px-3 py-1.5 rounded-full ${pathname === "/cabinet" ? "bg-brand/10 text-brand text-glow shadow-[0_0_10px_rgba(57,255,20,0.2)]" : "text-brand/80 hover:text-brand hover:bg-brand/5 hover:border-brand/50"}`}
+              className={`flex items-center gap-1.5 transition-colors text-[10px] xl:text-xs 2xl:text-sm font-bold uppercase tracking-widest border border-brand/30 px-3 py-1.5 rounded-full ${pathname === "/cabinet" ? "bg-brand/10 text-brand text-glow shadow-[0_0_10px_rgba(57,255,20,0.2)]" : "text-brand/80 hover:text-brand hover:bg-brand/5 hover:border-brand/50"}`}
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
               Кабінет
