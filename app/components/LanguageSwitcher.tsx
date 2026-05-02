@@ -59,25 +59,23 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-400">
+    <div className="flex flex-col items-center gap-1.5 text-[10px] xl:text-xs font-bold uppercase tracking-widest text-gray-400">
       <div id="google_translate_element" className="hidden"></div>
       <button
         onClick={() => changeLanguage("uk")}
-        className={`transition-colors hover:text-brand ${activeLang === "uk" ? "text-brand text-glow" : ""}`}
+        className={`transition-colors hover:text-brand leading-none ${activeLang === "uk" ? "text-brand text-glow" : ""}`}
       >
         UA
       </button>
-      <span className="text-white/20">|</span>
       <button
         onClick={() => changeLanguage("ru")}
-        className={`transition-colors hover:text-brand ${activeLang === "ru" ? "text-brand text-glow" : ""}`}
+        className={`transition-colors hover:text-brand leading-none ${activeLang === "ru" ? "text-brand text-glow" : ""}`}
       >
         RU
       </button>
-      <span className="text-white/20">|</span>
       <button
         onClick={() => changeLanguage("en")}
-        className={`transition-colors hover:text-brand ${activeLang === "en" ? "text-brand text-glow" : ""}`}
+        className={`transition-colors hover:text-brand leading-none ${activeLang === "en" ? "text-brand text-glow" : ""}`}
       >
         EN
       </button>
