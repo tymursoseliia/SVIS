@@ -46,7 +46,7 @@ export default function Navbar() {
             </span>
           </Link>
           
-          <div className="hidden xl:flex items-center gap-2 2xl:gap-5 whitespace-nowrap">
+          <div className="hidden xl:flex items-center gap-4 2xl:gap-6 ml-6 xl:ml-10 whitespace-nowrap">
             <Link
               href="/services"
               className={`transition-colors text-[10px] xl:text-xs 2xl:text-sm font-bold uppercase tracking-widest ${pathname === "/services" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
@@ -91,7 +91,7 @@ export default function Navbar() {
             </Link>
             <Link
               href="/contact"
-              className={`transition-colors text-[10px] xl:text-xs 2xl:text-sm font-bold uppercase tracking-widest hidden 2xl:block ${pathname === "/contact" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
+              className={`transition-colors text-[10px] xl:text-xs 2xl:text-sm font-bold uppercase tracking-widest hidden xl:block ${pathname === "/contact" ? "text-brand text-glow" : "text-gray-300 hover:text-brand"}`}
             >
               Контакти
             </Link>
@@ -109,7 +109,7 @@ export default function Navbar() {
               <LanguageSwitcher />
             </div>
             
-            <div className="hidden lg:block text-right">
+            <div className="hidden lg:block text-right mr-2 md:mr-0">
               <div className="text-[10px] md:text-xs text-brand/70 font-bold tracking-widest uppercase mb-1">
                 Щодня 08:00 - 20:00
               </div>
@@ -120,12 +120,6 @@ export default function Navbar() {
                 067 245 44 55
               </a>
             </div>
-            <Link
-              href="/#booking"
-              className="hidden sm:inline-flex items-center justify-center px-4 md:px-5 py-2 md:py-2.5 border-2 border-brand text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-lg text-dark bg-brand hover:bg-transparent hover:text-brand transition-all duration-300 btn-glow whitespace-nowrap"
-            >
-              Записатися
-            </Link>
 
             {/* Mobile Menu Button */}
             <button
